@@ -1,5 +1,4 @@
-const UnauthorizedError = require('./unauthorized-error')
-const ServerError = require('./server-error')
+const { UnauthorizedError, ServerError } = require('../errors') // Importa por default o index.js da pasta errors
 
 module.exports = class HttpResponse {
   static badRequest (error) {
