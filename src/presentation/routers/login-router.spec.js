@@ -1,11 +1,12 @@
 const LoginRouter = require('./login-router')
 const {
-  MissingParamError,
-  InvalidParamError,
   UnauthorizedError,
   ServerError
 } = require('../errors') // Importa por default o index.js da pasta errors
-
+const {
+  MissingParamError,
+  InvalidParamError
+} = require('../../utils/errors')
 const makeSut = () => {
   const authUseCaseSpy = makeAuthUseCase()
   const emailValidatorSpy = makeEmailValidator()
