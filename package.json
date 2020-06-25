@@ -21,7 +21,8 @@
     "husky": "^4.2.5",
     "jest": "^26.0.1",
     "lint-staged": "^10.2.10",
-    "standard": "^14.3.4"
+    "standard": "^14.3.4",
+    "@types/jest": "^26.0.3"
   },
   "dependencies": {
     "validator": "^13.1.1"
