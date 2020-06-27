@@ -133,13 +133,40 @@ describe('Auth UseCase', () => {
   test('Should throw if invalid dependecies are provided', async () => {
     // Equivalente -> const suts = [new AuthUseCase(), new AuthUseCase({}), new AuthUseCase({ loadUserByEmailRepositorySpy: {} })]
     const invalid = {}
+    const loadUserByEmailRepositorySpy = makeLoadUserByEmailRepository()
+    const encrypter = makeEncrypter()
+
     const suts = [].concat(
       new AuthUseCase(),
       new AuthUseCase({
-        loadUserByEmailRepositorySpy: null
+        loadUserByEmailRepositorySpy: null,
+        encrypter: null,
+        tokenGenerator: null
       }),
       new AuthUseCase({
-        loadUserByEmailRepositorySpy: invalid
+        loadUserByEmailRepositorySpy: invalid,
+        encrypter: null,
+        tokenGenerator: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepositorySpy,
+        encrypter: null,
+        tokenGenerator: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepositorySpy,
+        encrypter: invalid,
+        tokenGenerator: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepositorySpy,
+        encrypter,
+        tokenGenerator: null
+      }),
+      new AuthUseCase({
+        loadUserByEmailRepositorySpy,
+        encrypter,
+        tokenGenerator: invalid
       })
     )
     for (const sut of suts) {
