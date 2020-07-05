@@ -289,4 +289,31 @@ describe('Login Router', () => {
       expect(httpResponse.body).toEqual(new ServerError())
     }
   })
+
+  test('Should throw if dependecy throws', async () => {
+    const authUseCase = makeAuthUseCase()
+    const emailValidator = makeEmailValidator()
+
+    const suts = [].concat(
+      new LoginRouter({
+        authUseCase: makeAuthUseCaseWithError(),
+        emailValidator
+      }),
+      new LoginRouter({
+        authUseCase,
+        emailValidator: makeEmailValidatorWithError()
+      })
+    )
+    for (const sut of suts) {
+      const httpRequest = {
+        body: {
+          email: 'any_email@email.com',
+          password: 'any_password'
+        }
+      }
+      const httpResponse = await sut.route(httpRequest)
+      expect(httpResponse.statusCode).toBe(500)
+      expect(httpResponse.body).toEqual(new ServerError())
+    }
+  })
 })
