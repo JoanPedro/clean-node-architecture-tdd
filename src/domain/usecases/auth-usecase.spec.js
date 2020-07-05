@@ -149,7 +149,7 @@ describe('Auth UseCase', () => {
   test('Should call TokenGenerator with correct userId', async () => {
     const { sut, loadUserByEmailRepositorySpy, tokenGeneratorSpy } = makeSut()
     await sut.auth('valid_email@email.com', 'valid_password')
-    await expect(tokenGeneratorSpy.userId).toBe(loadUserByEmailRepositorySpy.user.id)
+    await expect(tokenGeneratorSpy.userId).toBe(loadUserByEmailRepositorySpy.user._id)
   })
 
   test('Should return any accessToken if correct credentials are provided', async () => {
@@ -166,7 +166,7 @@ describe('Auth UseCase', () => {
   })
 
   test('Should throw if no LoadUserByEmailRepository is provided', async () => {
-    class LoadUserByEmailRepositorySpy {}
+    class LoadUserByEmailRepositorySpy { }
     const loadUserByEmailRepositorySpy = new LoadUserByEmailRepositorySpy()
     const sut = new AuthUseCase(loadUserByEmailRepositorySpy)
     const promise = sut.auth('any_email@email.com', 'any_password')
@@ -174,7 +174,7 @@ describe('Auth UseCase', () => {
   })
 
   test('Should throw if LoadUserByEmailRepository has no load method', async () => {
-    class LoadUserByEmailRepositorySpy {}
+    class LoadUserByEmailRepositorySpy { }
     const loadUserByEmailRepositorySpy = new LoadUserByEmailRepositorySpy()
     const sut = new AuthUseCase(loadUserByEmailRepositorySpy)
     const promise = sut.auth('any_email@email.com', 'any_password')
@@ -189,7 +189,7 @@ describe('Auth UseCase', () => {
       tokenGeneratorSpy
     } = makeSut()
     await sut.auth('valid_email@email.com', 'valid_password')
-    await expect(updateAccessTokenRepositorySpy.userId).toBe(loadUserByEmailRepositorySpy.user.id)
+    await expect(updateAccessTokenRepositorySpy.userId).toBe(loadUserByEmailRepositorySpy.user._id)
     await expect(updateAccessTokenRepositorySpy.accessToken).toBe(tokenGeneratorSpy.accessToken)
   })
 
